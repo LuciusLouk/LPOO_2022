@@ -4,13 +4,14 @@
         xmlns:svc="clr-namespace:ClasesBase;assembly=ClasesBase"
         Title="ABMProducto" Height="537" Width="856">
     <Window.Resources>
-        <!--<ObjectDataProvider
-            ObjectType="{x:Type svc:TrabajarProducto}"
-            MethodName="TraerProductos"
+        <!--<ObjectDataProvider ObjectType="{x:Type svc:TrabajarProducto}" MethodName="TraerProductos"
             x:Key="list_productos">
-        </ObjectDataProvider>-->
-            
-        
+        </ObjectDataProvider>_-->
+
+        <ObjectDataProvider ObjectType="{x:Type svc:TrabajarProducto}" MethodName="TraerProductos" x:Key="list_productos"></ObjectDataProvider>
+
+
+
         <Style TargetType="{x:Type Canvas}" BasedOn="{StaticResource plantilla_canvas}" >
         </Style>
         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource plantilla_cajasTexto}" >
@@ -49,7 +50,7 @@
             <Button Canvas.Left="189" Canvas.Top="27" Content="Siguiente" Height="23" Name="btnSiguiente" Width="75" />
             <Button Canvas.Left="270" Canvas.Top="27" Content="Último" Height="23" Name="btnUltimo" Width="75" />
             <Grid Canvas.Left="27" Canvas.Top="70" Width="336">
-                <ListView  Name="grdProductos" ItemsSource="{Binding Source={StaticResource list_productos}}" Height="196" Margin="-6,-6,0,6">
+                <ListView  Name="grdProductos" ItemsSource="{Binding Source={StaticResource list_productos}}" Height="196" Margin="-6,-6,0,6" SelectionMode="Single">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="50" Header="Codigo" DisplayMemberBinding="{Binding Path=Codigo}" ></GridViewColumn>

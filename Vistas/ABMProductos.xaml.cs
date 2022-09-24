@@ -134,7 +134,9 @@ namespace Vistas
 
         private void btnModificar_Click(object sender, RoutedEventArgs e)
         {
-            //grdProductos.SelectedItems[0];
+            Console.WriteLine(grdProductos.SelectedItem);
+            dynamic selectedItem = grdProductos.SelectedItem;
+            var phoneNum = selectedItem.PhoneNum;
         }
 
         private void btnEliminar_Click(object sender, RoutedEventArgs e)
