@@ -129,5 +129,9 @@ namespace Vistas
             if (!(char.IsDigit(e.Text, e.Text.Length - 1) || approvedDecimalPoint))
                 e.Handled = true;
         }
+
+
+
+        
     }
 }
