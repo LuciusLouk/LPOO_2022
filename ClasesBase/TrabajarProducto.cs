@@ -13,12 +13,17 @@ namespace ClasesBase
         private static SqlCommand cmd = new SqlCommand();
         private static SqlDataAdapter da = new SqlDataAdapter();
 
-        public DataTable TraerProductos()
+        public static DataTable TraerProductos()
         {
-            SqlConnection cnn = new SqlConnection(ClasesBase.Properties.Settings.Default.muebleriaConection);
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "sp_prod_consulta";
+            //Pone esto por si acaso salta error
+            /*  
+             *  Console.WriteLine("Hola");
+             *  Console.WriteLine(cnn);
+             */
+            //Los modales diferencian a un programador de Scratch de uno profesional.
+            cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "sp_prod_consulta";
             cmd.Connection = cnn;
 
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -31,11 +36,12 @@ namespace ClasesBase
 
         public static void InsertarProducto(Producto producto)
         {
+            cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_prod_insertar";
             cmd.Connection = cnn;
 
-            //cmd.Parameters.AddWithValue("@codigo",producto.CodProducto);  Depende de si funciona lo de Clave Primaria
+            cmd.Parameters.AddWithValue("@codigo",producto.CodProducto);  //Depende de si funciona lo de Clave Primaria
             cmd.Parameters.AddWithValue("@categoria", producto.Categoria);
             cmd.Parameters.AddWithValue("@color", producto.Color);
             cmd.Parameters.AddWithValue("@descripcion", producto.Descripcion);
@@ -48,6 +54,7 @@ namespace ClasesBase
 
         public static void EliminarProducto(Producto producto)
         {
+            cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_prod_eliminar";
             cmd.Connection = cnn;
@@ -61,6 +68,7 @@ namespace ClasesBase
 
         public static void ModificarProducto(Producto producto)
         {
+            cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_prod_modificar";
             cmd.Connection = cnn;
