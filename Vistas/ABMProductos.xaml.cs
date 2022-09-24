@@ -31,7 +31,7 @@ namespace Vistas
             txtCategoria.Text = "";
             txtColor.Text = "";
             txtDescripcion.Text = "";
-            txtPrecio.Text = "";
+            txtPrecio.Text = "0";
 
             //txtCategoria.IsEnabled = true;
             txtCategoria.IsReadOnly = false;

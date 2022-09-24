@@ -24,7 +24,7 @@ namespace ClasesBase
 
         public override string ToString()
         {
-            string msg = "Desea guardar este producto?"+"\nCodigo: " + codProducto + "\nCategoria: " + categoria + "\nColor: " + color + "\nDescripcion: " + descripcion + "\nPrecio: " + precio;
+            string msg = "Desea guardar este producto?" + "\nCodigo: " + codProducto + "\nCategoria: " + categoria + "\nColor: " + color + "\nDescripcion: " + descripcion + "\nPrecio: " + precio;
             return msg;
         }
 
@@ -35,7 +35,8 @@ namespace ClasesBase
 
         public string this[string columnName]
         {
-            get {
+            get
+            {
                 string msgError = null;
                 switch (columnName)
                 {
@@ -59,6 +60,7 @@ namespace ClasesBase
                 //throw new NotImplementedException(); 
             }
         }
+
 
         private string validarCodProducto()
         {
@@ -98,6 +100,20 @@ namespace ClasesBase
 
         private string validarPrecio()
         {
+            /*
+            // Un problema con esto, es que se relentiza si se ingresa datos no decimales, y muestra "La cadena de entrada no tiene el formato correcto"
+            //Podría usarse en caso de que Precio sea un String y luego se convierta en decimal
+            decimal precioD;
+            if (decimal.TryParse(Precio, out precioD))
+            {
+                if (precioD <= 0)
+                    return "El valor del campo debe ser mayor a 0";
+            }
+            else
+            {
+                return "Format error";
+            }
+            */
             if (Precio <= 0)
             {
                 return "El valor del campo debe ser mayor a 0";

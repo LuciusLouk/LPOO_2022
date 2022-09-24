@@ -10,18 +10,48 @@
 
         <ObjectDataProvider ObjectType="{x:Type svc:TrabajarProducto}" MethodName="TraerProductos" x:Key="list_productos"></ObjectDataProvider>
 
+        <ObjectDataProvider ObjectType="{x:Type svc:TrabajarProducto}" MethodName="TraerProducto" x:Key="data_producto"></ObjectDataProvider>
 
+        <!-- Validaciones a las cajas de texto-->
+        <ControlTemplate x:Key="TextBoxErrorTemplate">
+            <DockPanel>
+                <Ellipse DockPanel.Dock="Right" Margin="2,0" Width="10" Height="10">
+                    <Ellipse.Fill>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#11FF1111" Offset="0"/>
+                            <GradientStop Color="#FFFF0000" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <AdornedElementPlaceholder></AdornedElementPlaceholder>
+            </DockPanel>
+        </ControlTemplate>
+        <!-- Fin de las Validaciones a las cajas de texto-->
 
         <Style TargetType="{x:Type Canvas}" BasedOn="{StaticResource plantilla_canvas}" >
         </Style>
         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource plantilla_cajasTexto}" >
+            <!-- Validaciones a las cajas de texto-->
+            <Setter Property="Validation.ErrorTemplate" Value="{StaticResource TextBoxErrorTemplate}"/>
+            <Setter Property="DataContext" Value="{StaticResource data_producto}"/>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip">
+                        <Setter.Value>
+                            <Binding Path="(Validation.Errors)[0].ErrorContent" RelativeSource="{x:Static RelativeSource.Self}"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                
+            </Style.Triggers>
+            <!-- Fin de las Validaciones a las cajas de texto-->
         </Style>
         <Style TargetType="{x:Type Label}" BasedOn="{StaticResource plantilla_label}" >
         </Style>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource plantilla_button}" >
         </Style>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Vistas;component/Images/bg1.png" />
@@ -32,11 +62,31 @@
             <Label Canvas.Left="118" Canvas.Top="147" Content="Color" Height="28" Name="label4" />
             <Label Canvas.Left="118" Canvas.Top="210" Content="Descripción" Height="28" Name="label5" />
             <Label Canvas.Left="118" Canvas.Top="272" Content="Precio" Height="28" Name="label6" />
-            <TextBox Canvas.Left="118" Canvas.Top="56" Height="23" Name="txtCodigo" Width="175" IsReadOnly="True" />
-            <TextBox Canvas.Left="118" Canvas.Top="119" Height="23" Name="txtCategoria" Width="175" IsReadOnly="True" />
-            <TextBox Canvas.Left="118" Canvas.Top="181" Height="23" Name="txtColor" Width="175" IsReadOnly="True" />
-            <TextBox Canvas.Left="118" Canvas.Top="243" Height="23" Name="txtDescripcion" Width="175" IsReadOnly="True" />
-            <TextBox Canvas.Left="118" Canvas.Top="307" Height="23" Name="txtPrecio" Width="175" IsReadOnly="True" />
+            <TextBox Canvas.Left="118" Canvas.Top="56" Height="23" Name="txtCodigo" Width="175" IsReadOnly="True">
+                <TextBox.Text>
+                    <Binding Path="CodProducto" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions="True" ValidatesOnDataErrors="True"/>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox Canvas.Left="118" Canvas.Top="119" Height="23" Name="txtCategoria" Width="175" IsReadOnly="True">
+                <TextBox.Text>
+                    <Binding Path="Categoria" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions="True" ValidatesOnDataErrors="True"/>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox Canvas.Left="118" Canvas.Top="181" Height="23" Name="txtColor" Width="175" IsReadOnly="True">
+                <TextBox.Text>
+                    <Binding Path="Color" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions="True" ValidatesOnDataErrors="True"/>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox Canvas.Left="118" Canvas.Top="243" Height="23" Name="txtDescripcion" Width="175" IsReadOnly="True">
+                <TextBox.Text>
+                    <Binding Path="Descripcion" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions="True" ValidatesOnDataErrors="True"/>
+                </TextBox.Text>
+            </TextBox>
+            <TextBox Canvas.Left="118" Canvas.Top="307" Height="23" Name="txtPrecio" Width="175" IsReadOnly="True">
+                <TextBox.Text>
+                    <Binding Path="Precio" UpdateSourceTrigger="PropertyChanged" ValidatesOnExceptions="True" ValidatesOnDataErrors="True"/>
+                </TextBox.Text>
+            </TextBox>
             <Button Canvas.Left="21" Canvas.Top="26" Content="Nuevo" Height="23" Name="btnNuevo" Width="75" Click="btnNuevo_Click" />
             <Button Canvas.Left="21" Canvas.Top="70" Content="Modificar" Height="23" Name="btnModificar" Width="75" Click="btnModificar_Click" />
             <Button Canvas.Left="21" Canvas.Top="119" Content="Eliminar" Height="23" Name="btnEliminar" Width="75" Click="btnEliminar_Click" />

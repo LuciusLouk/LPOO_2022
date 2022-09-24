@@ -34,6 +34,17 @@ namespace ClasesBase
             return dt;
         }
 
+        public static Producto TraerProducto()
+        {
+            Producto oProducto = new Producto();
+            oProducto.CodProducto = "";
+            oProducto.Categoria = "";
+            oProducto.Color = "";
+            oProducto.Descripcion = "";
+            oProducto.Precio = 0;
+            return oProducto;
+        }
+
         public static void InsertarProducto(Producto producto)
         {
             cmd = new SqlCommand();
@@ -41,7 +52,7 @@ namespace ClasesBase
             cmd.CommandText = "sp_prod_insertar";
             cmd.Connection = cnn;
 
-            cmd.Parameters.AddWithValue("@codigo",producto.CodProducto);  //Depende de si funciona lo de Clave Primaria
+            cmd.Parameters.AddWithValue("@codigo", producto.CodProducto);  //Depende de si funciona lo de Clave Primaria
             cmd.Parameters.AddWithValue("@categoria", producto.Categoria);
             cmd.Parameters.AddWithValue("@color", producto.Color);
             cmd.Parameters.AddWithValue("@descripcion", producto.Descripcion);
