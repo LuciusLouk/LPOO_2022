@@ -57,6 +57,8 @@ namespace Vistas
             MessageBoxResult msg = MessageBox.Show(oVendedor.ToString(), "Confirmacion", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
             if (msg == MessageBoxResult.OK)
             {
+                ClasesBase.TrabajarVendedores.InsertarVendedor(oVendedor);
+
                 txtLegajo.IsReadOnly = true;
                 txtApellido.IsReadOnly = true;
                 txtNombre.IsReadOnly = true;
@@ -99,6 +101,17 @@ namespace Vistas
         private void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void btnModificar_Click(object sender, RoutedEventArgs e)
+        {
+            //grdVendedores.SelectedItems[0];
+        }
+
+        private void btnEliminar_Click(object sender, RoutedEventArgs e)
+        {
+            //grdVendedores.SelectedItems[0];
+
         }
     }
 }

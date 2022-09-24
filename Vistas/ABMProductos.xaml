@@ -4,12 +4,11 @@
         xmlns:svc="clr-namespace:ClasesBase;assembly=ClasesBase"
         Title="ABMProducto" Height="537" Width="856">
     <Window.Resources>
-        <ObjectDataProvider
+        <!--<ObjectDataProvider
             ObjectType="{x:Type svc:TrabajarProducto}"
             MethodName="TraerProductos"
-            x:Key="list_productos"
-            >
-        </ObjectDataProvider>
+            x:Key="list_productos">
+        </ObjectDataProvider>-->
             
         
         <Style TargetType="{x:Type Canvas}" BasedOn="{StaticResource plantilla_canvas}" >
@@ -38,8 +37,8 @@
             <TextBox Canvas.Left="118" Canvas.Top="243" Height="23" Name="txtDescripcion" Width="175" IsReadOnly="True" />
             <TextBox Canvas.Left="118" Canvas.Top="307" Height="23" Name="txtPrecio" Width="175" IsReadOnly="True" />
             <Button Canvas.Left="21" Canvas.Top="26" Content="Nuevo" Height="23" Name="btnNuevo" Width="75" Click="btnNuevo_Click" />
-            <Button Canvas.Left="21" Canvas.Top="70" Content="Modificar" Height="23" Name="btnModificar" Width="75" />
-            <Button Canvas.Left="21" Canvas.Top="119" Content="Eliminar" Height="23" Name="btnEliminar" Width="75" />
+            <Button Canvas.Left="21" Canvas.Top="70" Content="Modificar" Height="23" Name="btnModificar" Width="75" Click="btnModificar_Click" />
+            <Button Canvas.Left="21" Canvas.Top="119" Content="Eliminar" Height="23" Name="btnEliminar" Width="75" Click="btnEliminar_Click" />
             <Button Canvas.Left="118" Canvas.Top="347" Content="Guardar" Height="23" Name="btnGuardar" Width="75" Click="btnGuardar_Click" IsEnabled="False" />
             <Button Canvas.Left="218" Canvas.Top="347" Content="Cancelar" Height="23" Name="btnCancelar" Width="75" Click="btnCancelar_Click" IsEnabled="False" />
             <Image Canvas.Left="21" Canvas.Top="220" Height="150" Name="image1" Stretch="Fill" Width="75" Source="/Vistas;component/Images/lamp.jpg" />
