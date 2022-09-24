@@ -22,6 +22,7 @@ namespace Vistas
         public Principal()
         {
             InitializeComponent();
+            //probando git
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
