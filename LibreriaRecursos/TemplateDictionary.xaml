@@ -10,14 +10,13 @@
         <Setter Property="Label.Foreground" Value="Snow"/>
         <Setter Property="Label.Padding" Value="1"/>
     </Style>
-
-
-
+    
     <Style  x:Key="plantilla_cajasTexto">
         <Setter Property="TextBox.Foreground" Value="Snow"/>
         <Setter Property="TextBox.Background" Value="#1CFFFAFA" />
         <Setter Property="TextBox.BorderThickness" Value="0"></Setter>
         <Setter Property="TextBox.FontSize" Value="16" />
+        
         <Style.Triggers>
             <Trigger Property="TextBox.IsReadOnly" Value="True">
                 <Setter Property="TextBox.Background" Value="#48545151"></Setter>
