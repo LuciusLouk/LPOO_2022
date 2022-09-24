@@ -55,7 +55,7 @@ namespace Vistas
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
             Producto oProducto = new Producto();
-            oProducto.Categoría = txtCategoria.Text;
+            oProducto.Categoria = txtCategoria.Text;
             oProducto.CodProducto = txtCodigo.Text;
             oProducto.Color = txtColor.Text;
             oProducto.Descripcion = txtDescripcion.Text;
