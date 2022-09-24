@@ -64,6 +64,8 @@ namespace Vistas
             MessageBoxResult msg = MessageBox.Show(oProducto.ToString(), "Confirmacion", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
             if (msg == MessageBoxResult.OK)
             {
+                ClasesBase.TrabajarProducto.InsertarProducto(oProducto);
+
                 txtCategoria.IsReadOnly = true;
                 txtCodigo.IsReadOnly = true;
                 txtColor.IsReadOnly = true;
@@ -128,6 +130,16 @@ namespace Vistas
 
             if (!(char.IsDigit(e.Text, e.Text.Length - 1) || approvedDecimalPoint))
                 e.Handled = true;
+        }
+
+        private void btnModificar_Click(object sender, RoutedEventArgs e)
+        {
+            //grdProductos.SelectedItems[0];
+        }
+
+        private void btnEliminar_Click(object sender, RoutedEventArgs e)
+        {
+            //grdProductos.SelectedItems[0];
         }
 
 

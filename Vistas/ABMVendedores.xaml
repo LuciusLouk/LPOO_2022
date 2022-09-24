@@ -24,8 +24,8 @@
             <TextBox Canvas.Left="120" Canvas.Top="119" Height="23" Name="txtApellido" Width="170" IsReadOnly="True" />
             <TextBox Canvas.Left="120" Canvas.Top="182" Height="23" Name="txtNombre" Width="170" IsReadOnly="True" />
             <Button Canvas.Left="23" Canvas.Top="27" Content="Nuevo" Height="23" Name="btnNuevo" Width="75" Click="btnNuevo_Click" />
-            <Button Canvas.Left="23" Canvas.Top="73" Content="Modificar" Height="23" Name="btnModificar" Width="75" />
-            <Button Canvas.Left="23" Canvas.Top="119" Content="Eliminar" Height="23" Name="btnEliminar" Width="75" />
+            <Button Canvas.Left="23" Canvas.Top="73" Content="Modificar" Height="23" Name="btnModificar" Width="75" Click="btnModificar_Click" />
+            <Button Canvas.Left="23" Canvas.Top="119" Content="Eliminar" Height="23" Name="btnEliminar" Width="75" Click="btnEliminar_Click" />
             <Button Canvas.Left="120" Canvas.Top="252" Content="Guardar" Height="23" Name="btnGuardar" Width="75" Click="btnGuardar_Click" IsEnabled="False" />
             <Button Canvas.Left="215" Canvas.Top="252" Content="Cancelar" Height="23" Name="btnCancelar" Width="75" Click="btnCancelar_Click" IsEnabled="False" />
             <Image Canvas.Left="15" Canvas.Top="173" Height="102" Name="image1" Stretch="Fill" Width="92" Source="/Vistas;component/Images/wd2.jpg" />
