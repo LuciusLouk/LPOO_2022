@@ -88,8 +88,8 @@
                 </TextBox.Text>
             </TextBox>
             <Button Canvas.Left="21" Canvas.Top="26" Content="Nuevo" Height="23" Name="btnNuevo" Width="75" Click="btnNuevo_Click" />
-            <Button Canvas.Left="21" Canvas.Top="70" Content="Modificar" Height="23" Name="btnModificar" Width="75" Click="btnModificar_Click" />
-            <Button Canvas.Left="21" Canvas.Top="119" Content="Eliminar" Height="23" Name="btnEliminar" Width="75" Click="btnEliminar_Click" />
+            <Button Canvas.Left="21" Canvas.Top="70" Content="Modificar" Height="23" Name="btnModificar" Width="75" Click="btnModificar_Click" IsEnabled="False" />
+            <Button Canvas.Left="21" Canvas.Top="119" Content="Eliminar" Height="23" Name="btnEliminar" Width="75" Click="btnEliminar_Click" IsEnabled="False" />
             <Button Canvas.Left="118" Canvas.Top="347" Content="Guardar" Height="23" Name="btnGuardar" Width="75" Click="btnGuardar_Click" IsEnabled="False" />
             <Button Canvas.Left="218" Canvas.Top="347" Content="Cancelar" Height="23" Name="btnCancelar" Width="75" Click="btnCancelar_Click" IsEnabled="False" />
             <Image Canvas.Left="21" Canvas.Top="220" Height="150" Name="image1" Stretch="Fill" Width="75" Source="/Vistas;component/Images/lamp.jpg" />
@@ -100,7 +100,7 @@
             <Button Canvas.Left="189" Canvas.Top="27" Content="Siguiente" Height="23" Name="btnSiguiente" Width="75" />
             <Button Canvas.Left="270" Canvas.Top="27" Content="Último" Height="23" Name="btnUltimo" Width="75" />
             <Grid Canvas.Left="27" Canvas.Top="70" Width="336">
-                <ListView  Name="grdProductos" ItemsSource="{Binding Source={StaticResource list_productos}}" Height="196" Margin="-6,-6,0,6" SelectionMode="Single">
+                <ListView  Name="grdProductos" ItemsSource="{Binding Source={StaticResource list_productos}}" Height="196" Margin="-6,-6,0,6" SelectionMode="Single" SelectionChanged="grdProductos_SelectionChanged">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Width="50" Header="Codigo" DisplayMemberBinding="{Binding Path=Codigo}" ></GridViewColumn>
