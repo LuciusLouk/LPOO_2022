@@ -70,7 +70,7 @@ namespace ClasesBase
             cmd.CommandText = "sp_prod_eliminar";
             cmd.Connection = cnn;
 
-            cmd.Parameters.AddWithValue("@codigo", producto.CodProducto);
+            cmd.Parameters.AddWithValue("@Codigo", producto.CodProducto);
 
             cnn.Open();
             cmd.ExecuteNonQuery();
@@ -84,11 +84,11 @@ namespace ClasesBase
             cmd.CommandText = "sp_prod_modificar";
             cmd.Connection = cnn;
 
-            cmd.Parameters.AddWithValue("@codigo", producto.CodProducto);
-            cmd.Parameters.AddWithValue("@categoria", producto.Categoria);
-            cmd.Parameters.AddWithValue("@color", producto.Color);
-            cmd.Parameters.AddWithValue("@descripcion", producto.Descripcion);
-            cmd.Parameters.AddWithValue("@precio", producto.Precio);
+            cmd.Parameters.AddWithValue("@Codigo", producto.CodProducto);
+            cmd.Parameters.AddWithValue("@Categoria", producto.Categoria);
+            cmd.Parameters.AddWithValue("@Color", producto.Color);
+            cmd.Parameters.AddWithValue("@Descripcion", producto.Descripcion);
+            cmd.Parameters.AddWithValue("@Precio", producto.Precio);
 
             cnn.Open();
             cmd.ExecuteNonQuery();
