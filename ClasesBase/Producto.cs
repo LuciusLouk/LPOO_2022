@@ -8,7 +8,7 @@ namespace ClasesBase
 {
     public class Producto : IDataErrorInfo
     {
-        private string codProducto, categoria, color, descripcion;
+        private string codigo, categoria, color, descripcion;
         private decimal precio;
 
         public Producto()
@@ -16,7 +16,7 @@ namespace ClasesBase
 
         }
 
-        public string CodProducto { get { return codProducto; } set { codProducto = value; } }
+        public string Codigo { get { return codigo; } set { codigo = value; } }
         public string Categoria { get { return categoria; } set { categoria = value; } }
         public string Color { get { return color; } set { color = value; } }
         public string Descripcion { get { return descripcion; } set { descripcion = value; } }
@@ -24,7 +24,7 @@ namespace ClasesBase
 
         public override string ToString()
         {
-            string msg = "Desea guardar este producto?" + "\nCodigo: " + codProducto + "\nCategoria: " + categoria + "\nColor: " + color + "\nDescripcion: " + descripcion + "\nPrecio: " + precio;
+            string msg = "Desea guardar este producto?" + "\nCodigo: " + codigo + "\nCategoria: " + categoria + "\nColor: " + color + "\nDescripcion: " + descripcion + "\nPrecio: " + precio;
             return msg;
         }
 
@@ -64,7 +64,7 @@ namespace ClasesBase
 
         private string validarCodProducto()
         {
-            if (String.IsNullOrEmpty(CodProducto))
+            if (String.IsNullOrEmpty(Codigo))
             {
                 return "El valor del campo es obligatorio";
             }

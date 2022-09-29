@@ -15,12 +15,6 @@ namespace ClasesBase
 
         public static DataTable TraerProductos()
         {
-            //Pone esto por si acaso salta error
-            /*  
-             *  Console.WriteLine("Hola");
-             *  Console.WriteLine(cnn);
-             */
-            //Los modales diferencian a un programador de Scratch de uno profesional.
             cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_prod_consulta";
@@ -37,7 +31,7 @@ namespace ClasesBase
         public static Producto TraerProducto()
         {
             Producto oProducto = new Producto();
-            oProducto.CodProducto = "";
+            oProducto.Codigo = "";
             oProducto.Categoria = "";
             oProducto.Color = "";
             oProducto.Descripcion = "";
@@ -52,7 +46,7 @@ namespace ClasesBase
             cmd.CommandText = "sp_prod_insertar";
             cmd.Connection = cnn;
 
-            cmd.Parameters.AddWithValue("@codigo", producto.CodProducto);  //Depende de si funciona lo de Clave Primaria
+            cmd.Parameters.AddWithValue("@codigo", producto.Codigo);  //Depende de si funciona lo de Clave Primaria
             cmd.Parameters.AddWithValue("@categoria", producto.Categoria);
             cmd.Parameters.AddWithValue("@color", producto.Color);
             cmd.Parameters.AddWithValue("@descripcion", producto.Descripcion);
@@ -70,7 +64,7 @@ namespace ClasesBase
             cmd.CommandText = "sp_prod_eliminar";
             cmd.Connection = cnn;
 
-            cmd.Parameters.AddWithValue("@Codigo", producto.CodProducto);
+            cmd.Parameters.AddWithValue("@Codigo", producto.Codigo);
 
             cnn.Open();
             cmd.ExecuteNonQuery();
@@ -84,7 +78,7 @@ namespace ClasesBase
             cmd.CommandText = "sp_prod_modificar";
             cmd.Connection = cnn;
 
-            cmd.Parameters.AddWithValue("@Codigo", producto.CodProducto);
+            cmd.Parameters.AddWithValue("@Codigo", producto.Codigo);
             cmd.Parameters.AddWithValue("@Categoria", producto.Categoria);
             cmd.Parameters.AddWithValue("@Color", producto.Color);
             cmd.Parameters.AddWithValue("@Descripcion", producto.Descripcion);

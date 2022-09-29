@@ -15,6 +15,7 @@ using System.Data;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Reflection;
+using System.Collections;
 
 namespace Vistas
 {
@@ -23,7 +24,7 @@ namespace Vistas
     /// </summary>
     public partial class ABMProductos : Window
     {
-        public ABMProductos()
+       public ABMProductos()
         {
             InitializeComponent();
 
@@ -44,6 +45,12 @@ namespace Vistas
             txtDescripcion.IsReadOnly = false;
             txtPrecio.IsReadOnly = false;
 
+            txtCategoria.IsEnabled = true;
+            txtCodigo.IsEnabled = true;
+            txtColor.IsEnabled = true;
+            txtDescripcion.IsEnabled = true;
+            txtPrecio.IsEnabled = true;
+
             btnGuardar.IsEnabled = true;
             btnCancelar.IsEnabled = true;
 
@@ -54,13 +61,15 @@ namespace Vistas
             btnSiguiente.IsEnabled = false;
             btnAnterior.IsEnabled = false;
             btnUltimo.IsEnabled = false;
+            grdProductos.SelectedIndex = -1;
+            grdProductos.IsEnabled = false;
         }
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
             Producto oProducto = new Producto();
             oProducto.Categoria = txtCategoria.Text;
-            oProducto.CodProducto = txtCodigo.Text;
+            oProducto.Codigo = txtCodigo.Text;
             oProducto.Color = txtColor.Text;
             oProducto.Descripcion = txtDescripcion.Text;
             oProducto.Precio = Decimal.Parse(txtPrecio.Text);
@@ -80,12 +89,32 @@ namespace Vistas
                 btnCancelar.IsEnabled = false;
 
                 btnNuevo.IsEnabled = true;
-                btnModificar.IsEnabled = true;
-                btnEliminar.IsEnabled = true;
+                btnModificar.IsEnabled = false;
+                btnEliminar.IsEnabled = false;
                 btnPrimero.IsEnabled = true;
                 btnSiguiente.IsEnabled = true;
                 btnAnterior.IsEnabled = true;
                 btnUltimo.IsEnabled = true;
+                grdProductos.IsEnabled = true;
+
+                ObservableCollection<Producto> prods = new ObservableCollection<Producto>();
+                //grdProductos.ItemsSource = prods;
+                foreach (DataRow row in TrabajarProducto.TraerProductos().Rows)
+                {
+                    Producto eProducto = new Producto();
+                    eProducto.Categoria = row["Categoria"].ToString();
+                    eProducto.Codigo = row["Codigo"].ToString();
+                    eProducto.Color = row["Color"].ToString();
+                    eProducto.Descripcion = row["Descripcion"].ToString();
+                    eProducto.Precio = Decimal.Parse(row["Precio"].ToString());
+                    prods.Add(eProducto);
+                }
+                grdProductos.ItemsSource = prods;
+                grdProductos.SelectedIndex = -1;
+                txtCodigo.Text = "";
+                txtCategoria.Text = "";
+                txtColor.Text = "";
+                txtDescripcion.Text = "";
             }
         }
 
@@ -108,13 +137,15 @@ namespace Vistas
             btnCancelar.IsEnabled = false;
 
             btnNuevo.IsEnabled = true;
-            btnModificar.IsEnabled = true;
-            btnEliminar.IsEnabled = true;
+            btnModificar.IsEnabled = false;
+            btnEliminar.IsEnabled = false;
             btnPrimero.IsEnabled = true;
             btnSiguiente.IsEnabled = true;
             btnAnterior.IsEnabled = true;
             btnUltimo.IsEnabled = true;
 
+            grdProductos.SelectedIndex = -1;
+            grdProductos.IsEnabled = true;
         }
 
         private void btnSalir_Click(object sender, RoutedEventArgs e)
@@ -160,7 +191,7 @@ namespace Vistas
              {*/
             Producto oProducto = new Producto();
             oProducto.Categoria = txtCategoria.Text;
-            oProducto.CodProducto = txtCodigo.Text;
+            oProducto.Codigo = txtCodigo.Text;
             oProducto.Color = txtColor.Text;
             oProducto.Descripcion = txtDescripcion.Text;
             oProducto.Precio = Decimal.Parse(txtPrecio.Text);
@@ -184,44 +215,55 @@ namespace Vistas
                 if (msg == MessageBoxResult.OK)
                 {
                     TrabajarProducto.ModificarProducto(oProducto);
-                    /*No se como actualizar la tabla, asi que ahi queda xd
-                     * 
-                     * DataTable dt = TrabajarProducto.TraerProductos();
-                    ObservableCollection<Producto> list = new ObservableCollection<Producto>();
-                    Producto prod = new Producto();
-                    foreach (DataRow row in dt.Rows)
+                    ObservableCollection<Producto> prods = new ObservableCollection<Producto>();
+                    foreach (DataRow row in TrabajarProducto.TraerProductos().Rows)
                     {
-                        prod.Categoria = row["Categoria"].ToString();
-                        prod.Color = row["Color"].ToString();
-                        prod.CodProducto = row["Codigo"].ToString();
-                        prod.Descripcion = row["Descripcion"].ToString();
-                        prod.Precio = Decimal.Parse(row["Precio"].ToString());
-
-                        list.Add(prod);
-                        prod = new Producto();
+                        Producto eProducto = new Producto();
+                        eProducto.Categoria = row["Categoria"].ToString();
+                        eProducto.Codigo = row["Codigo"].ToString();
+                        eProducto.Color = row["Color"].ToString();
+                        eProducto.Descripcion = row["Descripcion"].ToString();
+                        eProducto.Precio = Decimal.Parse(row["Precio"].ToString());
+                        prods.Add(eProducto);
                     }
-                    grdProductos.ItemsSource = list;
-                    Console.WriteLine(list.ToString());*/
-                    //System.Windows.Data Error: 40 : BindingExpression path error: 'Codigo' property not found on 'object' ''Producto' (HashCode=46947122)'. BindingExpression:Path=Codigo; DataItem='Producto' (HashCode=46947122); target element is 'TextBlock' (Name=''); target property is 'Text' (type 'String')
+                    grdProductos.ItemsSource = prods;
+                    grdProductos.SelectedIndex = -1;
+                    txtCodigo.Text = "";
+                    txtCategoria.Text = "";
+                    txtColor.Text = "";
+                    txtDescripcion.Text = "";
                 }
-                //}
             }
-            /*else
-            {
-                MessageBox.Show("No puede ingresar campos vacíos");
-            }
-        }*/
+            
         private void btnEliminar_Click(object sender, RoutedEventArgs e)
         {
             //grdProductos.SelectedItems[0];
             Producto oProducto = new Producto();
-            oProducto.CodProducto = txtCodigo.Text;
-            MessageBoxResult msg = MessageBox.Show("Seguro que quieres eliminar el producto con el Codigo: " + txtCodigo.Text + "?\n" + oProducto.ToString(), "Confirmacion", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
+            oProducto.Codigo = txtCodigo.Text;
+            MessageBoxResult msg = MessageBox.Show("Seguro que quieres eliminar el producto con el Codigo: " + txtCodigo.Text + "?\n", "Confirmacion", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
             if (msg == MessageBoxResult.OK)
             {
                 TrabajarProducto.EliminarProducto(oProducto);
+
+                ObservableCollection<Producto> prods = new ObservableCollection<Producto>();
+                //grdProductos.ItemsSource = prods;
+                foreach (DataRow row in TrabajarProducto.TraerProductos().Rows)
+                {
+                    Producto eProducto = new Producto();
+                    eProducto.Categoria = row["Categoria"].ToString();
+                    eProducto.Codigo = row["Codigo"].ToString();
+                    eProducto.Color = row["Color"].ToString();
+                    eProducto.Descripcion = row["Descripcion"].ToString();
+                    eProducto.Precio = Decimal.Parse(row["Precio"].ToString());
+                    prods.Add(eProducto);
+                }
+                grdProductos.ItemsSource = prods;
+                grdProductos.SelectedIndex = -1;
+                txtCodigo.Text = "";
+                txtCategoria.Text = "";
+                txtColor.Text = "";
+                txtDescripcion.Text = "";
             }
-            
         }
 
         private void grdProductos_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -231,15 +273,16 @@ namespace Vistas
                 int indice = grdProductos.SelectedIndex;
                 DataTable dt = TrabajarProducto.TraerProductos();
                 string st = dt.Rows[indice]["Codigo"].ToString();
-                btnModificar.IsEnabled = true;
                 txtCodigo.Text = st;
                 txtCategoria.IsEnabled = true;
                 txtColor.IsEnabled = true;
                 txtDescripcion.IsEnabled = true;
                 txtPrecio.IsEnabled = true;
                 txtCodigo.IsEnabled = false;
-                btnCancelar.IsEnabled = true;
+
                 btnGuardar.IsEnabled = false;
+                btnModificar.IsEnabled = true;
+                btnCancelar.IsEnabled = true;
                 btnEliminar.IsEnabled = true;
 
                 txtCategoria.IsReadOnly = false;
@@ -247,16 +290,18 @@ namespace Vistas
                 txtDescripcion.IsReadOnly = false;
                 txtPrecio.IsReadOnly = false;
             }
-            else{
-                txtCodigo.IsEnabled = true;
+            else
+            {
+                //txtCodigo.IsEnabled = true;
                 txtCodigo.Text = "";
                 btnModificar.IsEnabled = false;
                 btnEliminar.IsEnabled = false;
             }
         }
 
-
-
-        
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            btnCancelar.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        }
     }
 }
