@@ -22,6 +22,6 @@
         <ListBox Height="100" HorizontalAlignment="Left" Margin="58,39,0,0" Name="listaEstados" VerticalAlignment="Top" Width="157" 
                  ItemsSource="{Binding Source={StaticResource Estados},XPath=estado/@Name}" />
         <Rectangle Height="71" HorizontalAlignment="Left" Margin="49,165,0,0" Name="rectanguloFill" Stroke="Black" VerticalAlignment="Top" Width="177" 
-                   Fill="{Binding SelectedItem,ElementName=listaEstados, Path=Text, Converter={StaticResource ConversorDeEstados}}"/>
+                   Fill="{Binding ElementName=listaEstados, Path=SelectedValue, Converter={StaticResource ConversorDeEstados}}"/>
     </Canvas>
 </Window>
