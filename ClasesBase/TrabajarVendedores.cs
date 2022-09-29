@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace ClasesBase
 {
@@ -13,27 +15,39 @@ namespace ClasesBase
         private static SqlDataAdapter da = new SqlDataAdapter();
         private static SqlCommand cmd = new SqlCommand();
 
-        public static DataTable TraerVendedor()
+        public static DataTable TraerVendedores()
         {
+            cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_vend_consulta";
             cmd.Connection = cnn;
 
             da = new SqlDataAdapter(cmd);
-
+        
             DataTable dt = new DataTable();
             da.Fill(dt);
 
             return dt;
         }
+
+        public static Vendedor TraerVendedor()
+        {
+            Vendedor oVendedor = new Vendedor();
+            oVendedor.Apellido = "";
+            oVendedor.Legajo = "";
+            oVendedor.Nombre = "";
+            return oVendedor;
+        }
         
         public static void InsertarVendedor(Vendedor vendedor)
-        {           
+        {
+            cmd = new SqlCommand();
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_vend_insertar";
             cmd.Connection = cnn;
 
             //cmd.Parameters.AddWithValue("@legajo",vendedor.Legajo);  Depende de si funciona lo de Clave Primaria
+            cmd.Parameters.AddWithValue("@Legajo", vendedor.Legajo);
             cmd.Parameters.AddWithValue("@nombre",vendedor.Nombre);
             cmd.Parameters.AddWithValue("@apellido",vendedor.Apellido);
 
@@ -43,7 +57,8 @@ namespace ClasesBase
         }
 
         public static void EliminarVendedor(Vendedor vendedor)
-        {           
+        {
+            cmd = new SqlCommand();    
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_vend_eliminar";
             cmd.Connection = cnn;
@@ -56,7 +71,8 @@ namespace ClasesBase
         }
 
         public static void ModificarVendedor(Vendedor vendedor)
-        {           
+        {
+            cmd = new SqlCommand(); 
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "sp_vend_modificar";
             cmd.Connection = cnn;
