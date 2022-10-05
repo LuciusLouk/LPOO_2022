@@ -237,7 +237,6 @@ namespace Vistas
             
         private void btnEliminar_Click(object sender, RoutedEventArgs e)
         {
-            //grdProductos.SelectedItems[0];
             Producto oProducto = new Producto();
             oProducto.Codigo = txtCodigo.Text;
             MessageBoxResult msg = MessageBox.Show("Seguro que quieres eliminar el producto con el Codigo: " + txtCodigo.Text + "?\n", "Confirmacion", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);

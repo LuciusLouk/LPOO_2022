@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ClasesBase;
+using System.Collections.ObjectModel;
 
 namespace Vistas
 {
@@ -22,8 +23,10 @@ namespace Vistas
         public ABMClientes()
         {
             InitializeComponent();
-
         }
+
+        CollectionView cv;
+        ObservableCollection<Cliente> listaClientes = new ObservableCollection<Cliente>();
 
         private void btnNuevo_Click(object sender, RoutedEventArgs e)
         {
@@ -33,10 +36,14 @@ namespace Vistas
             txtDireccion.Text = "";
 
             txtDni.IsReadOnly = false;
-            //txtDni.IsEnabled = true;
             txtApellido.IsReadOnly = false;
             txtNombre.IsReadOnly = false;
             txtDireccion.IsReadOnly = false;
+
+            txtApellido.IsEnabled = true;
+            txtDireccion.IsEnabled = true;
+            txtDni.IsEnabled = true;
+            txtNombre.IsEnabled = true;
 
             btnGuardar.IsEnabled = true;
             btnCancelar.IsEnabled = true;
@@ -48,6 +55,9 @@ namespace Vistas
             btnSiguiente.IsEnabled = false;
             btnAnterior.IsEnabled = false;
             btnUltimo.IsEnabled = false;
+            grdClientes.SelectedIndex = -1;
+            grdClientes.IsEnabled = false;
+
         }
 
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
@@ -61,6 +71,8 @@ namespace Vistas
             MessageBoxResult msg = MessageBox.Show(oCliente.ToString(), "Confirmacion", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
             if (msg == MessageBoxResult.OK)
             {
+                TrabajarClientes.InsertarCliente(oCliente);
+
                 txtDni.IsReadOnly = true;
                 txtApellido.IsReadOnly = true;
                 txtNombre.IsReadOnly = true;
@@ -70,12 +82,21 @@ namespace Vistas
                 btnCancelar.IsEnabled = false;
 
                 btnNuevo.IsEnabled = true;
-                btnModificar.IsEnabled = true;
-                btnEliminar.IsEnabled = true;
+                btnModificar.IsEnabled = false;
+                btnEliminar.IsEnabled = false;
                 btnPrimero.IsEnabled = true;
                 btnSiguiente.IsEnabled = true;
                 btnAnterior.IsEnabled = true;
                 btnUltimo.IsEnabled = true;
+                grdClientes.IsEnabled = true;
+
+                grdClientes.SelectedIndex = -1;
+                grdClientes.ItemsSource = TrabajarClientes.TraerClientes();
+                txtApellido.Text = "";
+                txtDireccion.Text = "";
+                txtDni.Text = "";
+                txtNombre.Text = "";
+                btnCancelar.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
         }
 
@@ -87,7 +108,6 @@ namespace Vistas
             txtDireccion.Text = "";
 
             txtDni.IsReadOnly = true;
-            //txtDni.IsEnabled = false;
             txtApellido.IsReadOnly = true;
             txtNombre.IsReadOnly = true;
             txtDireccion.IsReadOnly = true;
@@ -96,17 +116,147 @@ namespace Vistas
             btnCancelar.IsEnabled = false;
 
             btnNuevo.IsEnabled = true;
-            btnModificar.IsEnabled = true;
-            btnEliminar.IsEnabled = true;
+            btnModificar.IsEnabled = false;
+            btnEliminar.IsEnabled = false;
             btnPrimero.IsEnabled = true;
             btnSiguiente.IsEnabled = true;
             btnAnterior.IsEnabled = true;
             btnUltimo.IsEnabled = true;
+
+            grdClientes.SelectedIndex = -1;
+            grdClientes.IsEnabled = true;
         }
 
         private void btnSalir_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
+
+        private void btnModificar_Click(object sender, RoutedEventArgs e)
+        {
+            Cliente oCliente = new Cliente();
+            oCliente.Dni = txtDni.Text;
+            oCliente.Apellido = txtApellido.Text;
+            oCliente.Nombre = txtNombre.Text;
+            oCliente.Direccion = txtDireccion.Text;
+            MessageBoxResult msg = MessageBox.Show("Seguro que quieres modificar el cliente con el " + oCliente.ToString(), "Confirmacion", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
+            if (msg == MessageBoxResult.OK)
+            {
+                TrabajarClientes.ModificarCliente(oCliente);
+                grdClientes.ItemsSource = TrabajarClientes.TraerClientes();
+                grdClientes.SelectedIndex = -1;
+                txtDni.Text = "";
+                txtNombre.Text = "";
+                txtApellido.Text = "";
+                txtDireccion.Text = "";
+                btnCancelar.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            }
+        }
+
+        private void btnEliminar_Click(object sender, RoutedEventArgs e)
+        {
+            Cliente oCliente = new Cliente();
+            oCliente.Dni = txtDni.Text;
+            MessageBoxResult msg = MessageBox.Show("Seguro que quieres eliminar el cliente con el DNI: " + txtDni.Text + "?\n", "Confirmacion", MessageBoxButton.OKCancel, MessageBoxImage.Exclamation);
+            if (msg == MessageBoxResult.OK)
+            {
+                TrabajarClientes.EliminarCliente(oCliente);
+                grdClientes.ItemsSource = TrabajarClientes.TraerClientes();
+                grdClientes.SelectedIndex = -1;
+                txtDni.Text = "";
+                txtNombre.Text = "";
+                txtApellido.Text = "";
+                txtDireccion.Text = "";
+                btnCancelar.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ObjectDataProvider odp = (ObjectDataProvider)this.Resources["list_clientes"];
+            listaClientes = odp.Data as ObservableCollection<Cliente>;
+
+            cv = (CollectionView)CollectionViewSource.GetDefaultView(grdClientes.DataContext);
+            btnCancelar.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        }
+
+        private void btnPrimero_Click(object sender, RoutedEventArgs e)
+        {
+            cv.MoveCurrentToFirst();
+        }
+
+        private void btnUltimo_Click(object sender, RoutedEventArgs e)
+        {
+            cv.MoveCurrentToLast();
+        }
+
+        private void btnAnterior_Click(object sender, RoutedEventArgs e)
+        {
+            cv.MoveCurrentToPrevious();
+            if (cv.IsCurrentBeforeFirst)
+            {
+                cv.MoveCurrentToLast();
+            }
+        }
+
+        private void btnSiguiente_Click(object sender, RoutedEventArgs e)
+        {
+            cv.MoveCurrentToNext();
+            if (cv.IsCurrentAfterLast)
+            {
+                cv.MoveCurrentToFirst();
+            }
+        }
+
+        private void grdClientes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (grdClientes.SelectedIndex != -1)
+            {
+                int indice = grdClientes.SelectedIndex;
+                ObservableCollection<Cliente> clis = TrabajarClientes.TraerClientes();
+                txtDni.Text = clis[indice].Dni;
+                txtDireccion.IsEnabled = true;
+                txtApellido.IsEnabled = true;
+                txtNombre.IsEnabled = true;
+                txtDni.IsEnabled = false;
+
+                btnGuardar.IsEnabled = false;
+                btnModificar.IsEnabled = true;
+                btnCancelar.IsEnabled = true;
+                btnEliminar.IsEnabled = true;
+
+                txtApellido.IsReadOnly = false;
+                txtNombre.IsReadOnly = false;
+                txtDireccion.IsReadOnly = false;
+            }
+            else
+            {
+                txtDni.Text = "";
+                btnModificar.IsEnabled = false;
+                btnEliminar.IsEnabled = false;
+            }
+        }
+
+        /*private void txtFiltro_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            cv.Filter = new Predicate<object>(Contains);
+        }
+
+        public bool Contains(object de)
+        {
+            Cliente cli = de as Cliente;
+            //Return members whose Orders have not been filled
+            string apellido= cli.Apellido.ToString();
+            string filtro = txtFiltro.Text.ToString();
+            bool band = apellido.Contains(filtro,StringComparison.CurrentCultureIgnoreCase);
+            return 
+        }
+        */
+        
+
+
+
+
     }
 }
