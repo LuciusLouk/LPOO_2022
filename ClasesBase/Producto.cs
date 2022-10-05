@@ -24,7 +24,7 @@ namespace ClasesBase
 
         public override string ToString()
         {
-            string msg = "Desea guardar este producto?" + "\nCodigo: " + codigo + "\nCategoria: " + categoria + "\nColor: " + color + "\nDescripcion: " + descripcion + "\nPrecio: " + precio;
+            string msg = "Codigo: " + codigo + "\nCategoria: " + categoria + "\nColor: " + color + "\nDescripcion: " + descripcion + "\nPrecio: " + precio;
             return msg;
         }
 
