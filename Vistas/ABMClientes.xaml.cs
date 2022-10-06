@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ClasesBase;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace Vistas
 {
@@ -97,6 +98,9 @@ namespace Vistas
                 txtDni.Text = "";
                 txtNombre.Text = "";
                 btnCancelar.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+
+                //grdClientes.DataContext = TrabajarClientes.TraerClientes();
+                cv.Filter = null;
             }
         }
 
@@ -125,6 +129,9 @@ namespace Vistas
 
             grdClientes.SelectedIndex = -1;
             grdClientes.IsEnabled = true;
+
+           // grdClientes.DataContext = TrabajarClientes.TraerClientes();
+            cv.Filter = null;
         }
 
         private void btnSalir_Click(object sender, RoutedEventArgs e)
@@ -151,6 +158,10 @@ namespace Vistas
                 txtApellido.Text = "";
                 txtDireccion.Text = "";
                 btnCancelar.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+
+                //grdClientes.DataContext = TrabajarClientes.TraerClientes();
+                Console.WriteLine( grdClientes.DataContext);
+                cv.Filter = null;
             }
         }
 
@@ -169,11 +180,15 @@ namespace Vistas
                 txtApellido.Text = "";
                 txtDireccion.Text = "";
                 btnCancelar.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                
+                //grdClientes.DataContext = TrabajarClientes.TraerClientes();
+                cv.Filter = null;
             }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            
             ObjectDataProvider odp = (ObjectDataProvider)this.Resources["list_clientes"];
             listaClientes = odp.Data as ObservableCollection<Cliente>;
 
@@ -238,25 +253,35 @@ namespace Vistas
             }
         }
 
-        /*private void txtFiltro_TextChanged(object sender, TextChangedEventArgs e)
+        private void txtFiltro_TextChanged(object sender, TextChangedEventArgs e)
         {
-            cv.Filter = new Predicate<object>(Contains);
+            //grdClientes.DataContext = TrabajarClientes.TraerClientes();
+            if (txtFiltro.Text != "")
+            {
+                cv = (CollectionView)CollectionViewSource.GetDefaultView(grdClientes.ItemsSource);
+                cv.Filter = new Predicate<object>(Contains);
+            }
+            else
+            {
+                cv.Filter = null;
+            }
         }
 
         public bool Contains(object de)
         {
             Cliente cli = de as Cliente;
-            //Return members whose Orders have not been filled
             string apellido= cli.Apellido.ToString();
             string filtro = txtFiltro.Text.ToString();
-            bool band = apellido.Contains(filtro,StringComparison.CurrentCultureIgnoreCase);
-            return 
+            bool band = false;
+
+            //Con esto Lo acepta aunque sea o no mayuscula o minuscula
+            CultureInfo culture = new CultureInfo("es-ES", false);
+            if ( culture.CompareInfo.IndexOf(apellido, filtro, CompareOptions.IgnoreCase) >= 0){
+            band = true; 
+            }
+            //Con este toma en cuenta mayusculas y minusculas
+            //band = apellido.Contains(filtro);
+            return band;
         }
-        */
-        
-
-
-
-
     }
 }

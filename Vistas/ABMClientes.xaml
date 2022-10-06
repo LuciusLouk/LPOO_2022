@@ -54,10 +54,8 @@
                     </ListView.View>
                 </ListView>
             </Grid>
-            <!--
-            Dejo esto comentado, Esta en proceso creativo aun xd
             <Label Content="Filtrar por apellido:" FontSize="15" Height="28" Name="label6" Canvas.Left="14" Canvas.Top="40" />
-            <TextBox Height="23" Name="txtFiltro" Width="166" Canvas.Left="147" Canvas.Top="40" TextChanged="txtFiltro_TextChanged" />-->
+            <TextBox Height="23" Name="txtFiltro" Width="166" Canvas.Left="147" Canvas.Top="40" TextChanged="txtFiltro_TextChanged" />
             </Canvas>
         <Button Content="Salir" Height="23" HorizontalAlignment="Right" Margin="0,450,45,0" Name="btnSalir" VerticalAlignment="Top" Width="75" Click="btnSalir_Click" />
     </Grid>
